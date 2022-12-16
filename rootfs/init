@@ -104,7 +104,7 @@ mkfifo /tmp/qmp/qemu.in /tmp/qmp/qemu.out
 
 (
 set +x
-cat /tmp/qmp/qemu.out | tee /proc/self/fd/2 | \
+< /tmp/qmp/qemu.out tee /proc/self/fd/2 |
 while IFS= read -r line; do
     if [ $(echo "\\${line}" | grep -cim1 '"event": "DEVICE_DELETED", "data": {"device": "nic0",') -eq 1 ]; then
         /etc/qemu-ifdown
